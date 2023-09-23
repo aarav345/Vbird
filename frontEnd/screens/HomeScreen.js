@@ -2,13 +2,12 @@
 
 import React from 'react';
 import { View, Text } from 'react-native';
-
-function HomeScreen() {
+export function HomeScreen() {
   return (
     <>
-    <view className="text-2xl"/>
-    Hey my name is aarav
-    <view/>
+    <View>
+      <Text>Home Screen</Text>
+    </View>
     </>
   );
 }
