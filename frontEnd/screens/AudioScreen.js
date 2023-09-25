@@ -2,7 +2,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
-export const ExploreSreen = () => {
+export const AudioScreen = (navigation) => {
   return(
     <Text>hELLO</Text>
   )

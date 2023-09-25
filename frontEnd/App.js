@@ -1,10 +1,10 @@
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { HomeScreen } from "./screens/HomeScreen";
 import { GetStarted } from "./screens/GetStarted";
 import { NativeWindStyleSheet } from "nativewind";
-import { ExploreSreen } from "./screens/ExploreSreen";
+import { AudioScreen } from "./screens/AudioScreen";
+import { MainScreen } from "./screens/MainScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -22,8 +22,7 @@ export default function App() {
           }}
         >
           <Stack.Screen name='getstarted' component={GetStarted} />
-          <Stack.Screen name='home' component={HomeScreen} />
-          <Stack.Screen name='explore' component={ExploreSreen}/>
+          <Stack.Screen name='main' component={MainScreen} />
           
         </Stack.Navigator>
       </NavigationContainer>

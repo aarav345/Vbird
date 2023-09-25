@@ -25,7 +25,7 @@ export const GetStarted = ({navigation}) => {
             </View>
 
             <View style={styles.press}>
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('home')}>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('main')}>
               <Text style={styles.buttonText}>Let's get Started</Text>
             </TouchableOpacity>
             </View>
