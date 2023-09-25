@@ -1,15 +1,14 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException
 from fastapi.responses import JSONResponse
 from models.bird_info import Bird_info
-from config.database import collection_name
+from config.database import collection_name, collection_name_audio
 from schemas.schemas import list_serial
-from typing import Optional
-from config.database import fs
 
 
 router = APIRouter()
 
 
+# for getting the basic bird info
 @router.get("/")
 async def get_birds():
     bird_infos = list_serial(collection_name.find())
@@ -17,24 +16,10 @@ async def get_birds():
 
 
 
-
-@router.post("/add_bird/")
-async def add_bird(bird_info: Bird_info, audio_file: UploadFile):
-    try:
-        # Save the uploaded audio file to GridFS
-        audio_data = await audio_file.read()
-        audio_file_id = fs.put(audio_data, filename=audio_file.filename)
-
-        # Insert the bird information into the MongoDB collection
-        bird_info_dict = bird_info.dict()
-        bird_info_dict["audio_file_id"] = audio_file_id
-        result = collection_name.insert_one(bird_info_dict)
-
-        # Return the newly inserted document's ID
-        return {"message": "Bird information added successfully", "bird_id": str(result.inserted_id)}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error adding bird information: {str(e)}")
-
+# for storing the bird info data in the database  
+@router.post("/")
+async def post_birds(bird_info: Bird_info):
+    collection_name.insert_one(dict(bird_info))
 
 
 #for receiving audio file from application
