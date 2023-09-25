@@ -30,5 +30,3 @@ async def process_audio(audio_file: UploadFile):
 
     results = {"result": "data stored in api"}
     return JSONResponse(content=results)
-
-

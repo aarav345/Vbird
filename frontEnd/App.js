@@ -13,17 +13,7 @@ export default function App() {
   });
   return (
     <>
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
-          <Stack.Screen name="GetStarted" component={GetStarted} />
-          <Stack.Screen name="Home" component={HomeScreen} />
-
-        </Stack.Navigator>
-      </NavigationContainer>
+    <GetStarted/>
     </>
   );
 }
