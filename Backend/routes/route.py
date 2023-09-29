@@ -21,6 +21,11 @@ async def get_birds():
 async def post_birds(bird_info: Bird_info):
     collection_name.insert_one(dict(bird_info))
 
+# for storing multiple bird info data
+@router.post("/bird_info_many")
+async def post_birds(bird_info: Bird_info):
+    collection_name.insertMany(dict(bird_info))
+
 
 #for receiving audio file from application
 @router.post("/process_audio/")
