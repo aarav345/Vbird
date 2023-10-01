@@ -2,7 +2,7 @@ def individual_serial(bird_info) -> dict:
     return {
         "id": str(bird_info["_id"]),
         "name": str(bird_info["name"]),
-        "species": str(bird_info["species"]),
+        "scientificName": str(bird_info["scientificName"]),
         "description": str(bird_info["description"]),
         "location" : str(bird_info["location"]),
     }

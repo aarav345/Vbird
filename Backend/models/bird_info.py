@@ -5,7 +5,7 @@ from typing import Optional
 
 class Bird_info(BaseModel):
     name:str
-    species: str
+    scientificName: str
     description:str
     location:str
 
