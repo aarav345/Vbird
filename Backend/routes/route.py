@@ -4,6 +4,9 @@ from models.bird_info import Bird_info
 from config.database import collection_name
 from schemas.schemas import list_serial, individual_serial
 from pymongo.errors import DuplicateKeyError
+import os
+from typing import List
+
 
 
 router = APIRouter()
@@ -14,7 +17,6 @@ router = APIRouter()
 async def get_birds():
     bird_infos = list_serial(collection_name.find())
     return bird_infos
-
 
 
 # adding data in database
@@ -48,3 +50,16 @@ async def process_audio(audio_file: UploadFile):
 
     results = {"result": "data stored in api"}
     return JSONResponse(content=results)
+
+
+
+@router.get("/get_all_bird_images", response_model=List[str])
+async def get_all_bird_images():
+    # List all files in the "image" folder within the "assets" folder
+    image_folder_path = os.path.join("./assets/", "image")
+    image_files = os.listdir(image_folder_path)
+
+    # Construct URLs for each image file
+    image_urls = [f"/get_bird_image/{os.path.splitext(file)[0]}" for file in image_files]
+
+    return image_urls
