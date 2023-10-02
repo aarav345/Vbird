@@ -6,6 +6,7 @@ from schemas.schemas import list_serial, individual_serial
 from pymongo.errors import DuplicateKeyError
 import os
 from typing import List
+from fastapi.responses import FileResponse
 
 
 
@@ -53,13 +54,28 @@ async def process_audio(audio_file: UploadFile):
 
 
 
-@router.get("/get_all_bird_images", response_model=List[str])
-async def get_all_bird_images():
-    # List all files in the "image" folder within the "assets" folder
+@router.get("/get_bird_image/{image_name}")
+async def get_bird_image(image_name: str):
+    # Define the path to the image file based on the provided image name
     image_folder_path = os.path.join("./assets/", "image")
-    image_files = os.listdir(image_folder_path)
+    image_path = os.path.join(image_folder_path, f"{image_name}.jpg")  # Assuming images are in JPG format
 
-    # Construct URLs for each image file
-    image_urls = [f"/get_bird_image/{os.path.splitext(file)[0]}" for file in image_files]
+    # Check if the image file exists
+    if os.path.exists(image_path):
+        # Serve the image as a FileResponse
+        return FileResponse(image_path, media_type="image/jpeg")  # Adjust media type based on image format
+    else:
+        # Return a 404 response if the image file does not exist
+        raise HTTPException(status_code=404, detail="Image not found")
+    
 
-    return image_urls
+@router.get("/get_bird_audio/{audio_name}")
+async def get_bird_audio(audio_name: str):
+    audio_folder_path = os.path.join("./assets/","audio")
+    audio_path = os.path.join(audio_folder_path, f"{audio_name}.mp3")
+
+    if os.path.exists(audio_path):
+        return FileResponse(audio_path, media_type="audio/mpeg")
+    
+    else:
+        raise HTTPException(status_code=404, detail="audio not found")
