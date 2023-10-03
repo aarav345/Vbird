@@ -1,16 +1,16 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, FileResponse
 from models.bird_info import Bird_info
 from config.database import collection_name
 from schemas.schemas import list_serial, individual_serial
 from pymongo.errors import DuplicateKeyError
 import os
 from typing import List
-from fastapi.responses import FileResponse
+import base64
 
 
 
-router = APIRouter()
+router = APIRouter()    
 
 
 # for getting the basic bird info
@@ -67,6 +67,10 @@ async def get_bird_image(image_name: str):
     else:
         # Return a 404 response if the image file does not exist
         raise HTTPException(status_code=404, detail="Image not found")
+    
+
+
+
     
 
 @router.get("/get_bird_audio/{audio_name}")
