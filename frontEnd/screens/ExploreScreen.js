@@ -7,16 +7,49 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
-  TextInput, 
+  TextInput,
 } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon from "react-native-vector-icons/FontAwesome";
-import axios from "axios";
+import filter from "lodash.filter";
 
 const Tab = createBottomTabNavigator();
 
-export function ExploreScreen(navigation) {
+const birdData = [
+  { name: "Asian Koel", image: require("../assets/image/Asian Koel.jpg") },
+  { name: "Black Kite", image: require("../assets/image/Black kite.jpg") },
+  { name: "Wood Snipe", image: require("../assets/image/Wood Snipe.jpg") },
+  // Add more bird entries as needed
+];
 
+export function ExploreScreen({ navigation }) {
+
+  // for search functionality
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredData, setFilteredData] = useState(birdData);
+
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    const filteredResults = filter(birdData, (bird) =>
+      bird.name.toLowerCase().includes(query.toLowerCase())
+    );
+    setFilteredData(filteredResults);
+  };
+
+  // to navigate to bird detail screen
+  const navigateToBirdDetail = (birdName, birdImage) => {
+    navigation.navigate("BirdDetail", { birdName, birdImage });
+  };
+
+  const renderBirdItem = ({ item }) => (
+    <TouchableOpacity
+      onPress={() => navigateToBirdDetail(item.name, item.image)}
+      style={styles.card}
+    >
+      <Image source={item.image} style={styles.image} />
+      <Text style={styles.birdName}>{item.name}</Text>
+    </TouchableOpacity>
+  );
 
   return (
     <>
@@ -38,10 +71,19 @@ export function ExploreScreen(navigation) {
             style={styles.textField}
             placeholderTextColor="#757c7b"
             underlineColorAndroid="transparent"
+            autoCapitalize="none"
+            autoCorrect="false"
+            value={searchQuery}
+            onChangeText={(query) => handleSearch(query)}
           />
         </View>
         <View>
-          
+          <FlatList
+            data={filteredData}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={renderBirdItem}
+            horizontal={true}
+          />
         </View>
       </View>
     </>
@@ -87,5 +129,22 @@ const styles = StyleSheet.create({
     color: "#1A2624",
   },
 
- 
+  card: {
+    marginTop: 50,
+    margin: 10,
+    width: 300,
+    borderRadius: 10,
+    overflow: "hidden",
+    elevation: 4,
+  },
+  image: {
+    width: "100%",
+    height: 350,
+  },
+  birdName: {
+    fontSize: 30,
+    fontWeight: "600",
+    color: "#1A2624",
+    textAlign: "center",
+  },
 });

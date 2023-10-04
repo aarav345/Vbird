@@ -5,6 +5,8 @@ import { GetStarted } from "./screens/GetStarted";
 import { NativeWindStyleSheet } from "nativewind";
 import { AudioScreen } from "./screens/AudioScreen";
 import { MainScreen } from "./screens/MainScreen";
+import BirdDetailScreen from "./screens/BirdDetailScreen";
+import { ExploreScreen } from "./screens/ExploreScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +25,8 @@ export default function App() {
         >
           <Stack.Screen name='getstarted' component={GetStarted} />
           <Stack.Screen name='main' component={MainScreen} />
+          <Stack.Screen name='explore' component={ExploreScreen} />
+          <Stack.Screen name="BirdDetail" component={BirdDetailScreen}/>
           
         </Stack.Navigator>
       </NavigationContainer>

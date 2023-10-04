@@ -59,6 +59,7 @@ export const MainScreen = () => {
           }}
         />
       </Tab.Navigator>
+      
     </>
   );
 };

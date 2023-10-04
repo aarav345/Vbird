@@ -53,6 +53,24 @@ async def process_audio(audio_file: UploadFile):
     return JSONResponse(content=results)
 
 
+@router.get("/all_bird_names")
+async def get_all_bird_images():
+    image_names = []
+    image_folder_path = os.path.join("./assets/", "image")
+
+    for image_name in os.listdir(image_folder_path):
+        # Check if the file is an image (you can further filter by file extension if needed)
+        if os.path.isfile(os.path.join(image_folder_path, image_name)):
+            # Remove the file extension from the image name
+            image_name_without_extension = os.path.splitext(image_name)[0]
+            image_names.append(image_name_without_extension)
+
+    if not image_names:
+        return HTTPException(status_code=404, detail="No images found")
+
+    return image_names
+
+
 
 @router.get("/get_bird_image/{image_name}")
 async def get_bird_image(image_name: str):
