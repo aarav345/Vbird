@@ -1898,6 +1898,11 @@
     "prompts" "^2.4.0"
     "semver" "^7.5.2"
 
+"@react-native-google-signin/google-signin@^10.0.1":
+  "integrity" "sha512-oZoU2lfKyn0s0GqqdFsi4v2FSENrxQYQU9DD/RSkxDdkIQ49Wwo6p5LKlgXY04GwZEVdYMuvZN3G89gQW0ig2g=="
+  "resolved" "https://registry.npmjs.org/@react-native-google-signin/google-signin/-/google-signin-10.0.1.tgz"
+  "version" "10.0.1"
+
 "@react-native/assets-registry@^0.72.0":
   "integrity" "sha512-Im93xRJuHHxb1wniGhBMsxLwcfzdYreSZVQGDoMJgkd6+Iky61LInGEHnQCTN0fKNYF1Dvcofb4uMmE1RQHXHQ=="
   "resolved" "https://registry.npmjs.org/@react-native/assets-registry/-/assets-registry-0.72.0.tgz"
@@ -4302,7 +4307,7 @@
     "compare-urls" "^2.0.0"
     "url" "^0.11.0"
 
-"expo@*", "expo@^49.0.7", "expo@~49.0.8":
+"expo@*", "expo@^49.0.7", "expo@>=47.0.0", "expo@~49.0.8":
   "integrity" "sha512-lkTRwMvJP8j7KAHJB+aZqI9dH1hw7j2QE1X9Okpcf+t0deGqH36XqkjUCcU6KYgCOjSnt8fvRm89TJR5Oq0ElA=="
   "resolved" "https://registry.npmjs.org/expo/-/expo-49.0.8.tgz"
   "version" "49.0.8"
