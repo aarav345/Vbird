@@ -17,7 +17,6 @@ const Tab = createBottomTabNavigator();
 
 const birdData = [
   { name: "Asian Koel", image: require("../assets/image/Asian Koel.jpg") },
-  { name: "Black Kite", image: require("../assets/image/Black kite.jpg") },
   { name: "Wood Snipe", image: require("../assets/image/Wood Snipe.jpg") },
   // Add more bird entries as needed
 ];
