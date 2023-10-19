@@ -74,15 +74,15 @@ const styles = StyleSheet.create({
     height: 300,
     resizeMode: "contain",
     borderRadius: 10,
-    shadowColor: "#000", // Shadow color
-    shadowOffset: { width: 2, height: 10 }, // Shadow offset
-    shadowOpacity: 1, // Shadow opacity (0 to 1)
-    shadowRadius: 5, // Shadow radius
+    shadowColor: "#000",
+    shadowOffset: { width: 2, height: 10 }, 
+    shadowOpacity: 1, 
+    shadowRadius: 5,
     elevation: 10, 
   },
   birdName: {
     fontSize: 24,
-    fontWeight: "bold",
+    fontWeight: 700,
     marginTop: 16,
     color: "#1A1A1A"
   },
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
 
   infoLabel: {
     fontSize: 24,
-    fontWeight: "500",
+    fontWeight: 500,
   },
   
   infoText: {

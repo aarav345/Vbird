@@ -25,7 +25,7 @@ export const GetStarted = ({navigation}) => {
             </View>
 
             <View style={styles.press}>
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('main')}>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('login')}>
               <Text style={styles.buttonText}>Let's get Started</Text>
             </TouchableOpacity>
             </View>
@@ -39,7 +39,7 @@ export const GetStarted = ({navigation}) => {
 const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
-    resizeMode: "cover", // You can change this to "contain" if needed
+    resizeMode: "cover",
     width: "100%",
     height: "100%",
   },
@@ -55,8 +55,8 @@ const styles = StyleSheet.create({
 
   text: {
     color: "#FAFAFA",
-    fontSize: "3.5rem",
-    fontWeight: "bold",
+    fontSize: 56,
+    fontWeight: 700,
   },
 
   container2: {
@@ -65,14 +65,14 @@ const styles = StyleSheet.create({
 
   text1: {
     color: "#FAFAFA",
-    fontSize: "3rem",
-    fontWeight: "bold",
+    fontSize: 48,
+    fontWeight: 700,
   },
 
   text2: {
     color: "#d3d3d3",
-    fontSize: "1.5rem",
-    fontWeight: "400",
+    fontSize: 24,
+    fontWeight: 400,
   },
 
   button: {
@@ -81,13 +81,13 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderRadius: 50,
     width: "70%",
-    marginTop: "30px",
-    padding: "15px"
+    marginTop: 30,
+    padding: 15
   },
 
   buttonText: {
     color: "#FAFAFA",
-    fontSize: "1.5rem",
-    fontWeight: "500"
+    fontSize: 24,
+    fontWeight: 500,
   }
 });

@@ -91,18 +91,18 @@ export function ExploreScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    padding: "2rem",
+    padding: 32,
   },
   text: {
-    fontSize: "2.25rem",
-    fontWeight: "600",
+    fontSize: 36,
+    fontWeight: 600,
     color: "#1A2624",
     width: "70%",
   },
 
   text2: {
-    fontSize: "2.25rem",
-    fontWeight: "400",
+    fontSize: 36,
+    fontWeight: 400,
     color: "#757c7b",
   },
 
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
 
   textField: {
     flex: 1,
-    fontSize: "1.5rem",
+    fontSize: 24,
     color: "#1A2624",
   },
 
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
   },
   birdName: {
     fontSize: 30,
-    fontWeight: "600",
+    fontWeight: 600,
     color: "#1A2624",
     textAlign: "center",
   },
