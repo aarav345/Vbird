@@ -5,6 +5,7 @@ def individual_serial(bird_info) -> dict:
         "scientificName": str(bird_info["scientificName"]),
         "description": str(bird_info["description"]),
         "location" : str(bird_info["location"]),
+        "imageUri": str(bird_info["imageUri"])
     }
 
 

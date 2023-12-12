@@ -8,4 +8,5 @@ class Bird_info(BaseModel):
     scientificName: str
     description:str
     location:str
+    imageUri: str
 
