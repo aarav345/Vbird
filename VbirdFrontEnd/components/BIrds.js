@@ -8,6 +8,7 @@ import {
 } from "react-native-responsive-screen";
 import Animated, { FadeInDown } from "react-native-reanimated";
 import Loading from "./Loading";
+import { useNavigation } from "@react-navigation/native";
 
 NativeWindStyleSheet.setOutput({
   default: "native",
@@ -15,6 +16,8 @@ NativeWindStyleSheet.setOutput({
 
 const Birds = () => {
   const [birdData, setBirdData] = useState([]);
+
+  const navigation = useNavigation();
 
   useEffect(() => {
     const fetchBirdInfo = async () => {
@@ -58,7 +61,7 @@ const Birds = () => {
             numColumns={2}
             showsVerticalScrollIndicator={false}
             renderItem={({ item }) => (
-              <CardItem item={item} index={item.index} />
+              <CardItem item={item} index={item.index} navigation = {navigation} />
             )} // Pass index here
             onEndReachedThreshold={0.1}
           />
@@ -68,7 +71,7 @@ const Birds = () => {
   );
 };
 
-const CardItem = ({ item, index }) => {
+const CardItem = ({ item, index, navigation }) => {
   let isEven = index % 2 == 0;
 
   return (
@@ -79,6 +82,7 @@ const CardItem = ({ item, index }) => {
         .damping(12)}
     >
       <Pressable
+        onPress={() => navigation.navigate('RecipeDetail', {...item})}
         style={{
           width: "100%",
           paddingLeft: isEven ? 0 : 8,
@@ -94,6 +98,7 @@ const CardItem = ({ item, index }) => {
             borderRadius: 35,
           }}
           className="bg-black/5"
+          sharedTransitionTag="tag"
         />
 
         <Text
