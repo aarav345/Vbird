@@ -125,7 +125,7 @@ const BirdDetailScreen = (props) => {
 
             <View>
               <YoutubeIframe
-                videoId={getYoutubeVideo("https://www.youtube.com/watch?v=hb3SGuhSKj4")}
+                videoId={getYoutubeVideo(item.video)}
                 height={hp(30)}
               />
             </View>

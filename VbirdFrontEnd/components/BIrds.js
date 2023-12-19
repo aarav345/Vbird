@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Pressable, Image } from "react-native";
+import { View, Text, Pressable, Image, TextInput } from "react-native";
 import { NativeWindStyleSheet } from "nativewind";
 import MasonryList from "@react-native-seoul/masonry-list";
 import {
@@ -9,13 +9,17 @@ import {
 import Animated, { FadeInDown } from "react-native-reanimated";
 import Loading from "./Loading";
 import { useNavigation } from "@react-navigation/native";
+import { BellIcon, MagnifyingGlassIcon } from "react-native-heroicons/outline";
+import { filter } from "lodash";
 
 NativeWindStyleSheet.setOutput({
   default: "native",
 });
 
-const Birds = () => {
+const BIrds = () => {
   const [birdData, setBirdData] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
 
   const navigation = useNavigation();
 
@@ -35,6 +39,7 @@ const Birds = () => {
         }));
 
         setBirdData(dataArrayWithIndex);
+        setFilteredData(dataArrayWithIndex); // Initialize filteredData with all data
       } catch (error) {
         console.error("Error fetching bird information:", error);
       }
@@ -43,29 +48,57 @@ const Birds = () => {
     fetchBirdInfo();
   }, []);
 
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    const filteredResults = filter(birdData, (bird) =>
+      bird.name.toLowerCase().includes(query.toLowerCase())
+    );
+    setFilteredData(filteredResults);
+  };
+
   return (
-    <View className="mx-4 space-y-3">
-      <Text
-        style={{ fontSize: hp(3) }}
-        className="font-semibold text-neutral-600"
-      >
-        Birds Categories:
-      </Text>
-      <View>
-        {birdData.length == 0 ? (
-          <Loading size="large" className="mt-20" />
-        ) : (
-          <MasonryList
-            data={birdData}
-            keyExtractor={(item) => item.id.toString()}
-            numColumns={2}
-            showsVerticalScrollIndicator={false}
-            renderItem={({ item }) => (
-              <CardItem item={item} index={item.index} navigation = {navigation} />
-            )} // Pass index here
-            onEndReachedThreshold={0.1}
-          />
-        )}
+    <View className="space-y-3">
+      <View className=" mx-4 flex-row items-center rounded-full bg-black/5 p-[6px]">
+        <TextInput
+          placeholder="Search Any Birds"
+          placeholderTextColor={"gray"}
+          style={{ fontSize: hp(1.7) }}
+          className=" flex-1 text-base mb-1 pl-3 tracking-wider"
+          value={searchQuery}
+          onChangeText={(query) => handleSearch(query)}
+        />
+
+        <View className=" bg-white rounded-full p-3">
+          <MagnifyingGlassIcon size={hp(2.5)} color="gray" />
+        </View>
+      </View>
+      <View className="mx-4 space-y-3">
+        <Text
+          style={{ fontSize: hp(3) }}
+          className="font-semibold text-neutral-600"
+        >
+          Birds Categories:
+        </Text>
+        <View>
+          {filteredData.length === 0 ? (
+            <Loading size="large" className="mt-20" />
+          ) : (
+            <MasonryList
+              data={filteredData}
+              keyExtractor={(item) => item.id.toString()}
+              numColumns={2}
+              showsVerticalScrollIndicator={false}
+              renderItem={({ item }) => (
+                <CardItem
+                  item={item}
+                  index={item.index}
+                  navigation={navigation}
+                />
+              )}
+              onEndReachedThreshold={0.1}
+            />
+          )}
+        </View>
       </View>
     </View>
   );
@@ -82,7 +115,7 @@ const CardItem = ({ item, index, navigation }) => {
         .damping(12)}
     >
       <Pressable
-        onPress={() => navigation.navigate('RecipeDetail', {...item})}
+        onPress={() => navigation.navigate("RecipeDetail", { ...item })}
         style={{
           width: "100%",
           paddingLeft: isEven ? 0 : 8,
@@ -112,4 +145,4 @@ const CardItem = ({ item, index, navigation }) => {
   );
 };
 
-export default Birds;
+export default BIrds;
