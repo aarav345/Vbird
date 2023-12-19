@@ -2,17 +2,18 @@ import { StatusBar } from 'expo-status-bar'
 import React from 'react'
 import { ScrollView, View, Image, Text} from 'react-native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { BellIcon, MagnifyingGlassIcon } from "react-native-heroicons/outline";
+import { BellIcon} from "react-native-heroicons/outline";
 import Birds from '../components/BIrds';
+import BottomNav from '../components/BottomNav';
 
 
 const HomeScreen = () => {
   return (
-    <View>
+    <View  className="flex-1 justify-center items-center">
       <StatusBar style='dark' />
       <ScrollView showsHorizontalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 50 }}
-        className=" space-y-6 pt-14">
+        className=" space-y-6 pt-14 w-full">
         <View className=" mx-4 flex-row justify-between items-center mb-2">
           <Image source={require('../assets/images/avatar.png')} style={{
             width: hp(5.5), height: hp(5)
@@ -39,11 +40,13 @@ const HomeScreen = () => {
 
         <View>
           <Birds/>
-        </View>
+        </View> 
 
 
 
       </ScrollView>
+
+      <BottomNav/>
     </View>
   )
 }
