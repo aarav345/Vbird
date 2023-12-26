@@ -43,10 +43,10 @@ const WelcomeScreen = () => {
             </Animated.View>
 
             <View className=" flex items-center space-y-2">
-                <Text style={{ fontSize: hp(7) }} className=" font-bold text-white tracking-widest text-6xl">
+                <Text style={{ fontSize: hp(7) }} className=" font-bold text-white tracking-widest ">
                     VBird
                 </Text>
-                <Text style={{ fontSize: hp(2) }} className=" font-medium text-white tracking-widest text-lg">
+                <Text style={{ fontSize: hp(2) }} className=" font-medium text-white tracking-widest ">
                     Be a wildLife Bird Expert.
                 </Text>
             </View>
