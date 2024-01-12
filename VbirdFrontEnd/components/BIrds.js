@@ -20,6 +20,7 @@ const BIrds = () => {
   const [birdData, setBirdData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredData, setFilteredData] = useState([]);
+  
 
   const navigation = useNavigation();
 
@@ -29,17 +30,17 @@ const BIrds = () => {
         const response = await fetch(`https://vbird.onrender.com/bird_info`);
         const data = await response.json();
 
-        // Check if data is an array, if not, extract it
+    
         const dataArray = Array.isArray(data) ? data : Object.values(data);
 
-        // Add an index property to each item in the array
+       
         const dataArrayWithIndex = dataArray.map((item, index) => ({
           ...item,
           index,
         }));
 
         setBirdData(dataArrayWithIndex);
-        setFilteredData(dataArrayWithIndex); // Initialize filteredData with all data
+        setFilteredData(dataArrayWithIndex); 
       } catch (error) {
         console.error("Error fetching bird information:", error);
       }
