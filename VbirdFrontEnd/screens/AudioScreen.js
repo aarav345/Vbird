@@ -42,7 +42,8 @@ const AudioScreen = () => {
           playsInSilentModeIOS: true,
         });
         const { recording, status } = await Audio.Recording.createAsync(
-          Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY 
+          Audio.RecordingOptionsPresets.HIGH_QUALITY,
+           
         );
 
         console.log("Recording format:", status);
