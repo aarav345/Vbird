@@ -9,8 +9,10 @@ import {
 import { MicrophoneIcon, StopCircleIcon } from "react-native-heroicons/solid";
 import Loading from "../components/Loading";
 import { AndroidAudioEncoder, AndroidOutputFormat } from "expo-av/build/Audio";
+import { AuthProvider, useAuth } from "../AuthContext/AuthContext";
 
 const AudioScreen = () => {
+  const {user} = useAuth();
   const [recording, setRecording] = React.useState(null);
   const [recordings, setRecordings] = React.useState([]);
   const [isRecordingInProgress, setIsRecordingInProgress] =
@@ -189,6 +191,15 @@ const AudioScreen = () => {
 
   function clearRecordings() {
     setRecordings([]);
+  }
+
+  if (!user) {
+    return (
+      <View className="flex-1 justify-center items-center">
+        <Text>Please sign in to access audio functionality</Text>
+        <BottomNav />
+      </View>
+    );
   }
 
   return (

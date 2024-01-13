@@ -6,7 +6,7 @@ import WelcomeScreen from './screens/WelcomeScreen';
 import HomeScreen from './screens/HomeScreen';
 import BirdDetailScreen from './screens/BirdDetailScreen';
 import AudioScreen from "./screens/AudioScreen";
-import SignIn from "./screens/SignIn";
+import { AuthProvider } from "./AuthContext/AuthContext";
 
 
 
@@ -18,17 +18,21 @@ const Stack = createNativeStackNavigator();
 
 
 export default function App() {
+
+  
   return (
-    <NavigationContainer>
+    <AuthProvider>
+    <NavigationContainer persistNavigationState={true}>
       <Stack.Navigator initialRouteName='Welcome' screenOptions={{headerShown: false}}>
         <Stack.Screen name='Welcome' component={WelcomeScreen}/>
         <Stack.Screen name='Home' component={HomeScreen}/>
         <Stack.Screen name='RecipeDetail' component={BirdDetailScreen}/>
         <Stack.Screen name='AudioScreen' component={AudioScreen}/>
-        <Stack.Screen name='SignIn' component={SignIn}/>
+
 
       </Stack.Navigator>
     </NavigationContainer>
+    </AuthProvider>
   
   );
 }
