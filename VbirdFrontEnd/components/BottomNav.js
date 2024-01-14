@@ -4,6 +4,7 @@ import { View, TouchableOpacity, Modal, Text} from 'react-native'
 import { HomeIcon , MagnifyingGlassIcon, MicrophoneIcon, UserIcon} from "react-native-heroicons/solid";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import SignIn from './SignIn';
+import Button from './Button';
 
 const BottomNav = () => {
     const navigation = useNavigation();
@@ -16,7 +17,7 @@ const BottomNav = () => {
       return (
         <Modal visible={openModal} animationType='slide' transparent={true}>
           <View className=" flex-1 justify-center items-center" style={{backgroundColor: transparent}}>
-            <View className=" bg-white p-4 w-[90%] h-[30%] rounded-lg">
+            <View className=" p-4 w-[90%] h-[30%] rounded-lg bg-white">
               <TouchableOpacity onPress={() => setOpenModal(false)}>
                 <Text className=" text-base font-medium text-gray-600">Close</Text>
               </TouchableOpacity>
