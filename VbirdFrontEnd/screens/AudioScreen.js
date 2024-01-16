@@ -12,7 +12,7 @@ import { AndroidAudioEncoder, AndroidOutputFormat } from "expo-av/build/Audio";
 import { AuthProvider, useAuth } from "../AuthContext/AuthContext";
 
 const AudioScreen = () => {
-  const {user} = useAuth();
+  const { user } = useAuth();
   const [recording, setRecording] = React.useState(null);
   const [recordings, setRecordings] = React.useState([]);
   const [isRecordingInProgress, setIsRecordingInProgress] =
@@ -41,12 +41,37 @@ const AudioScreen = () => {
           allowsRecordingIOS: true,
           playsInSilentModeIOS: true,
         });
-        const { recording, status } = await Audio.Recording.createAsync(
-          Audio.RecordingOptionsPresets.HIGH_QUALITY,
-           
-        );
 
-        console.log("Recording format:", status);
+        const recording = new Audio.Recording();
+
+
+        const RECORDING_OPTIONS_PRESET_LOW_QUALITY = {
+          android: {
+            extension: ".wav",
+            outputFormat: AndroidOutputFormat.MPEG_4,
+            audioEncoder: AndroidAudioEncoder.AAC,
+            sampleRate: 16000,
+            numberOfChannels: 1,
+            bitRate: 64000,
+          
+          },
+          ios: {
+            extension: ".wav",
+            audioQuality: Audio.RECORDING_OPTION_IOS_AUDIO_QUALITY_MIN,
+            sampleRate: 44100,
+            numberOfChannels: 1,
+            bitRate: 128000,
+            linearPCMBitDepth: 16,
+            linearPCMIsBigEndian: false,
+            linearPCMIsFloat: false,
+          },
+        };
+
+        await recording.prepareToRecordAsync(
+          RECORDING_OPTIONS_PRESET_LOW_QUALITY
+        );
+        await recording.startAsync();
+
         setRecording(recording);
         setIsRecordingInProgress(true);
       }
@@ -74,7 +99,7 @@ const AudioScreen = () => {
       setRecordings(allRecordings);
       setIsRecordingInProgress(false);
     } catch (err) {
-      console.error("Error stopping recording", err);
+      Alert.alert("Error stopping recording", err);
     } finally {
       setRecording(null);
     }
@@ -96,7 +121,7 @@ const AudioScreen = () => {
       formData.append("audio_file", {
         uri: audioUri,
         type: "audio/mpeg",
-        name: "audio.mp3",
+        name: "audio.wav",
       });
 
       const response = await fetch(
@@ -164,7 +189,10 @@ const AudioScreen = () => {
                   if (durationInSeconds > 10) {
                     sendAudio(recordingLine.file);
                   } else {
-                    Alert.alert("Error", "The recorded audio should be greater than 10 seconds")
+                    Alert.alert(
+                      "Error",
+                      "The recorded audio should be greater than 10 seconds"
+                    );
                   }
                 }}
                 title="Find"

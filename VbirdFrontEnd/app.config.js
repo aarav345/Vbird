@@ -26,7 +26,8 @@ export default
         "backgroundColor": "#ffffff"
       },
       "package" : "com.heraldCollege.VbirdAuthentication",
-      "googleServicesFile" : process.env.GOOGLE_SERVICES_JSON
+      "googleServicesFile" : process.env.GOOGLE_SERVICES_JSON,
+      
     },
     "web": {
       "favicon": "./assets/favicon.png"
