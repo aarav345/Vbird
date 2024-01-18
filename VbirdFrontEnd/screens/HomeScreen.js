@@ -14,7 +14,7 @@ const HomeScreen = () => {
   const { user, signIn, signOut } = useAuth();
 
   return (
-    <View className="flex-1 justify-center items-center">
+    <View className="flex-1 justify-center items-center bg-[#2F4C31]">
       <StatusBar style="dark" />
       <ScrollView
         showsHorizontalScrollIndicator={false}
@@ -43,26 +43,26 @@ const HomeScreen = () => {
             />
           )}
 
-          <BellIcon size={hp(4)} color="gray" />
+          {/* <BellIcon size={hp(4)} color="gray" /> */}
         </View>
 
         <View className=" mx-4 space-y-2 mb-2">
-          <Text style={{ fontSize: hp(1.7) }} className=" text-neutral-600">
+          <Text style={{ fontSize: hp(1.7) }} className=" text-[#AEBCB1]">
             Hello, {user ? "Mr/Mrs." + user.user.name : "BirdWatchers"}!
           </Text>
 
           <Text
             style={{ fontSize: hp(4) }}
-            className=" font-semibold text-neutral-600"
+            className=" font-semibold text-white"
           >
             Find Birds in Wild,
           </Text>
 
           <Text
             style={{ fontSize: hp(3.8) }}
-            className=" font-semibold text-neutral-600"
+            className=" font-semibold text-white"
           >
-            explore The <Text className=" text-green-400">Wild</Text>
+            Explore The Wild
           </Text>
         </View>
 

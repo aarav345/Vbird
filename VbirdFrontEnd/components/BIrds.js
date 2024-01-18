@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Pressable, Image, TextInput } from "react-native";
+import { View, Text, Pressable, Image, TextInput, StyleSheet } from "react-native";
 import { NativeWindStyleSheet } from "nativewind";
 import MasonryList from "@react-native-seoul/masonry-list";
 import {
@@ -20,7 +20,6 @@ const BIrds = () => {
   const [birdData, setBirdData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredData, setFilteredData] = useState([]);
-  
 
   const navigation = useNavigation();
 
@@ -30,17 +29,15 @@ const BIrds = () => {
         const response = await fetch(`https://vbird.onrender.com/bird_info`);
         const data = await response.json();
 
-    
         const dataArray = Array.isArray(data) ? data : Object.values(data);
 
-       
         const dataArrayWithIndex = dataArray.map((item, index) => ({
           ...item,
           index,
         }));
 
         setBirdData(dataArrayWithIndex);
-        setFilteredData(dataArrayWithIndex); 
+        setFilteredData(dataArrayWithIndex);
       } catch (error) {
         console.error("Error fetching bird information:", error);
       }
@@ -59,7 +56,7 @@ const BIrds = () => {
 
   return (
     <View className="space-y-3">
-      <View className=" mx-4 flex-row items-center rounded-full bg-black/5 p-[6px]">
+      <View className=" mx-4 flex-row items-center rounded-full bg-white p-[6px]">
         <TextInput
           placeholder="Search Any Birds"
           placeholderTextColor={"gray"}
@@ -74,10 +71,7 @@ const BIrds = () => {
         </View>
       </View>
       <View className="mx-4 space-y-3">
-        <Text
-          style={{ fontSize: hp(3) }}
-          className="font-semibold text-neutral-600"
-        >
+        <Text style={{ fontSize: hp(3) }} className="font-semibold text-white">
           Birds Categories:
         </Text>
         <View>
@@ -121,23 +115,31 @@ const CardItem = ({ item, index, navigation }) => {
           width: "100%",
           paddingLeft: isEven ? 0 : 8,
           paddingRight: isEven ? 8 : 0,
+          
+          
         }}
-        className="flex justify-center mb-4 space-y-1"
+        className="flex justify-center mb-4 space-y-1 " 
+        
       >
+        <View className=" border border-white rounded-3xl">
         <Image
-          source={{ uri: item.imageUri }}
+          source={{ uri: `data:image/png;base64,${item.imageUri}` }}
           style={{
             width: "100%",
             height: index % 3 == 0 ? hp(25) : hp(35),
             borderRadius: 35,
           }}
-          className="bg-black/5"
+          className="bg-[#071b0d13] "
           sharedTransitionTag="tag"
+          
         />
+        </View>
+
+        
 
         <Text
           style={{ fontSize: hp(2) }}
-          className="font-semibold ml-2 text-neutral-600"
+          className="font-semibold ml-2  text-white"
         >
           {item.name.length > 20 ? item.name.slice(0, 20) + "..." : item.name}
         </Text>
