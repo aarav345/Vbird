@@ -1,6 +1,13 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
-import { View, Text, Image, ScrollView, TouchableOpacity, Alert } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -12,58 +19,104 @@ import { useNavigation } from "@react-navigation/native";
 import YoutubeIframe from "react-native-youtube-iframe";
 import Animated, { FadeInDown, FadeIn } from "react-native-reanimated";
 import { useAuth } from "../AuthContext/AuthContext";
+import { useBirdData } from "../BirdDataContext/BIrdDataContext";
 
 const BirdDetailScreen = (props) => {
   let item = props.route.params;
   const [isFavourite, setIsFavourite] = useState(false);
   const naivgation = useNavigation();
   const { user, signIn, signOut } = useAuth();
+  const [favouriteData, setFavouriteData] = useState([]);
 
+
+
+  const fetchFav = async (user_name) => {
+    try {
+      const response = await fetch(
+        `https://vbird.onrender.com/get_favourite_birds/${user_name}`
+      );
+
+      const data = await response.json();
+
+      console.log(data);
+
+      const dataArray = Array.isArray(data) ? data : Object.values(data);
+
+      const dataArrayWithIndex = dataArray.map((item, index) => ({
+        ...item,
+        index,
+      }));
+
+      if (dataArrayWithIndex.length > 0) {
+        setFavouriteData(dataArrayWithIndex);
+        if (dataArrayWithIndex.some((favItem) => favItem.bird === item.name)) {
+          setIsFavourite(true);
+        }
+      } else {
+        setFavouriteData([]);
+      }
+    } catch (error) {
+      console.error("Error fetching bird information:", error);
+    }
+  };
+
+  useEffect(() => {
+    // Fetch favorites once on mount
+    if (user) {
+      fetchFav(user.user.name);
+    }
+  }, []);
 
   useEffect(() => {
     if (isFavourite) {
-
       if (!user) {
         Alert.alert("To use this feature, First Sign In");
         setIsFavourite(false);
       } else {
-      const bird_name = item.name;
-      const user_name = user.user.name; // Replace with the actual bird name
+        const bird_name = item.name;
+        const user_name = user.user.name;
 
-      // Create FormData object and append data
-      const formData = new FormData();
-      formData.append("bird_name", bird_name);
-      formData.append("user_name", user_name);
+        // Create FormData object and append data
+        const formData = new FormData();
+        formData.append("bird_name", bird_name);
+        formData.append("user_name", user_name);
 
-      try {
-        fetch(
-          `https://vbird.onrender.com/favourite/${bird_name}/${user_name}`,
-          {
-            method: "POST",
-            headers: {
-              Accept: "application/json",
-            },
-            body: formData,
-          }
-        )
-          .then((response) => {
-            if (response.ok) {
-              return response.text();
-            } else {
-              throw new Error(`Request failed with status: ${response.status}`);
+        try {
+          fetch(
+            `https://vbird.onrender.com/favourite/${bird_name}/${user_name}`,
+            {
+              method: "POST",
+              headers: {
+                Accept: "application/json",
+              },
+              body: formData,
             }
-          })
-          .then((responseBody) => {
-            console.log(responseBody);
-          })
-          .catch((error) => {
-            console.error("Error during the request:", error);
-          });
-      } catch (error) {
-        console.error("Error during the request:", error);
+          )
+            .then((response) => {
+              if (response.ok) {
+                return response.text();
+              } else {
+                throw new Error(
+                  `Request failed with status: ${response.status}`
+                );
+              }
+            })
+            .then((responseBody) => {
+              console.log(responseBody);
+            })
+            .catch((error) => {
+              console.error("Error during the request:", error);
+            });
+        } catch (error) {
+          console.error("Error during the request:", error);
+        }
       }
-    }}
-  }, [isFavourite]);
+    }
+
+
+  }, [isFavourite, user, item]);
+
+  
 
   const getYoutubeVideo = (url) => {
     const regex = /[?&]v=([^&]+)/;
@@ -226,6 +279,7 @@ const BirdDetailScreen = (props) => {
           <Text style={{ fontSize: hp(2) }} className="text-neutral-700">
             {item.location}
           </Text>
+          
         </Animated.View>
 
         {item.video && (
@@ -249,6 +303,7 @@ const BirdDetailScreen = (props) => {
                 height={hp(30)}
               />
             </View>
+            
           </Animated.View>
         )}
       </View>

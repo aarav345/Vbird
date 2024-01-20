@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { View, TouchableOpacity, Modal, Text } from "react-native";
 import {
-  MagnifyingGlassIcon,
+  HeartIcon,
   MicrophoneIcon,
   UserIcon,
   HomeIcon,
@@ -64,6 +64,18 @@ const BottomNav = () => {
         }}
       >
         <HomeIcon size={hp(4.5)} strokeWidth={5} color="#E5E4E2" />
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        className={`p-2 rounded-2xl ${
+          activeNav === "favourite" ? "bg-green-900" : ""
+        }`}
+        onPress={() => {
+          setBottomNavActive("favourite");
+          navigation.navigate("FavouriteScreen");
+        }}
+      >
+        <HeartIcon size={hp(4.5)} strokeWidth={5} color="#E5E4E2" />
       </TouchableOpacity>
 
       <TouchableOpacity

@@ -11,13 +11,15 @@ import Loading from "./Loading";
 import { useNavigation } from "@react-navigation/native";
 import { BellIcon, MagnifyingGlassIcon } from "react-native-heroicons/outline";
 import { filter } from "lodash";
+import { useBirdData } from "../BirdDataContext/BIrdDataContext";
+
 
 NativeWindStyleSheet.setOutput({
   default: "native",
 });
 
 const BIrds = () => {
-  const [birdData, setBirdData] = useState([]);
+  const {birdData, setBirdData} = useBirdData();
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredData, setFilteredData] = useState([]);
 
@@ -43,8 +45,10 @@ const BIrds = () => {
       }
     };
 
-    fetchBirdInfo();
-  }, []);
+    if (birdData.length === 0) {
+      fetchBirdInfo();
+    }
+  }, [birdData, setBirdData]);
 
   const handleSearch = (query) => {
     setSearchQuery(query);
