@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import { View, TouchableOpacity, Modal, Text } from "react-native";
+import { View, TouchableOpacity, Modal, Text, ImageBackground } from "react-native";
 import {
   HeartIcon,
   MicrophoneIcon,
@@ -24,17 +24,24 @@ const BottomNav = () => {
   function renderModal() {
     return (
       <Modal visible={openModal} animationType="slide" transparent={true}>
+        
         <View
           className="flex-1 justify-center items-center"
           style={{ backgroundColor: transparent }}
         >
-          <View className="p-4 w-[90%] h-[30%] rounded-lg bg-white">
+         
+          <View className="p-4 w-[90%] h-[30%] bg-white rounded-lg ">
+          
             <TouchableOpacity onPress={() => setOpenModal(false)}>
               <Text className="text-base font-medium text-gray-600">Close</Text>
             </TouchableOpacity>
             <SignIn />
+            
           </View>
+          
+          
         </View>
+        
       </Modal>
     );
   }

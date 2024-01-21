@@ -28,8 +28,6 @@ const BirdDetailScreen = (props) => {
   const { user, signIn, signOut } = useAuth();
   const [favouriteData, setFavouriteData] = useState([]);
 
-
-
   const fetchFav = async (user_name) => {
     try {
       const response = await fetch(
@@ -61,7 +59,6 @@ const BirdDetailScreen = (props) => {
   };
 
   useEffect(() => {
-    // Fetch favorites once on mount
     if (user) {
       fetchFav(user.user.name);
     }
@@ -112,11 +109,36 @@ const BirdDetailScreen = (props) => {
         }
       }
     }
-
-
   }, [isFavourite, user, item]);
 
-  
+  const removeFav = async () => {
+    if (isFavourite) {
+      if (!user) {
+        Alert.alert("To use this feature, First Sign In");
+        setIsFavourite(false);
+      } else {
+        const bird_name = item.name;
+        const user_name = user.user.name;
+
+        try {
+          const response = await fetch(
+            `https://vbird.onrender.com/delete_favourite_birds/${user_name}/${bird_name}`,
+            { method: "DELETE" }
+          );
+
+          if (response.ok) {
+            const data = await response.json();
+            console.log(data);
+            setIsFavourite(false);
+          } else {
+            throw new Error(`Request failed with status: ${response.status}`);
+          }
+        } catch (error) {
+          console.error("Error during the request:", error);
+        }
+      }
+    }
+  };
 
   const getYoutubeVideo = (url) => {
     const regex = /[?&]v=([^&]+)/;
@@ -188,7 +210,9 @@ const BirdDetailScreen = (props) => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => setIsFavourite(!isFavourite)}
+          onPress={() => {
+            setIsFavourite(!isFavourite); removeFav()
+          }}
           className=" p-2 rounded-full mr-5 bg-white"
           style={{
             shadowColor: "#000",
@@ -279,7 +303,6 @@ const BirdDetailScreen = (props) => {
           <Text style={{ fontSize: hp(2) }} className="text-neutral-700">
             {item.location}
           </Text>
-          
         </Animated.View>
 
         {item.video && (
@@ -303,7 +326,6 @@ const BirdDetailScreen = (props) => {
                 height={hp(30)}
               />
             </View>
-            
           </Animated.View>
         )}
       </View>

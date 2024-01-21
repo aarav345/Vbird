@@ -15,6 +15,43 @@ const FavouriteScreen = () => {
   const [favouriteData, setFavouriteData] = useState([]);
   const navigation = useNavigation();
 
+  
+
+  useEffect(() => {
+    if (user !== null) {
+      const fetchFav = async () => {
+        try {
+          const response = await fetch(
+            `https://vbird.onrender.com/get_favourite_birds/${user.user.name}`
+          );
+  
+          const data = await response.json();
+  
+          console.log(data);
+  
+          const dataArray = Array.isArray(data) ? data : Object.values(data);
+  
+          const dataArrayWithIndex = dataArray.map((item, index) => ({
+            ...item,
+            index,
+          }));
+  
+          if (dataArrayWithIndex.length > 0) {
+            setFavouriteData(dataArrayWithIndex);
+          } else {
+            setFavouriteData([]);
+          }
+        } catch (error) {
+          console.error("Error fetching bird information:", error);
+        }
+      };
+  
+      fetchFav();
+    }
+
+    
+  }, [user]);
+
   if(!user) {
     return(
       <View className=" flex-1 justify-center items-center bg-[#2F4C31] ">
@@ -23,41 +60,6 @@ const FavouriteScreen = () => {
       </View>
     )
   }
-
-  useEffect(() => {
-    
-    const user_name = user.user.name;
-    const fetchFav = async () => {
-      try {
-        const response = await fetch(
-          `https://vbird.onrender.com/get_favourite_birds/${user_name}`
-        );
-
-        const data = await response.json();
-
-        console.log(data);
-
-        const dataArray = Array.isArray(data) ? data : Object.values(data);
-
-        const dataArrayWithIndex = dataArray.map((item, index) => ({
-          ...item,
-          index,
-        }));
-
-        if (dataArrayWithIndex.length > 0) {
-          setFavouriteData(dataArrayWithIndex);
-        } else {
-
-          setFavouriteData([]);
-        }
-
-      } catch (error) {
-        console.error("Error fetching bird information:", error);
-      }
-    };
-
-    fetchFav();
-  }, []);
 
 
   const getBirdInfo = (birdName) => {
